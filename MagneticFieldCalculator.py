@@ -22,7 +22,7 @@ def B_wire(I=1,r=np.array([1])):
     r=np.array(r)
     return mu0*I/(r*2*np.pi)
 
-def B_solenoid_center(I=1,L=1,N=100):
+def B_solenoid_center(I=1,L=1,N=100,k=1):
     '''
     Parameters
     ----------
@@ -37,8 +37,8 @@ def B_solenoid_center(I=1,L=1,N=100):
 
     # I is amp
     # r is radius m
-    k=1 #relative permeability of the core
-    return k*mu0*I*N/L
+    #k=1e7 #relative permeability of the core
+    return k*mu0*I*N/L*1e3
 
 def B_flat_coil(I=1,R=0.5e-3,N=1,z=100e-6):
     '''
@@ -73,6 +73,7 @@ def B_spiral_coil(NL=2,I=1,d=0.1e-3,width=0.1e-3,rend=0.5e-3,z=100e-6,tlayer=0e-
     n=rend//(d+width)
     Btotalz=0
     Btotalc=0
+    
     for k in range(int(n)):
         Bc,Bz=B_flat_coil(I,(k+1)*(d+width/2),1,z+k*tlayer)
         Btotalc +=NL*Bc
